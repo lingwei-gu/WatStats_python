@@ -24,13 +24,18 @@ class Scrape(object):
         elem.click()
         # login is finished
 
+        # get transactions
         driver.get("https://watcard.uwaterloo.ca/OneWeb/Financial/Transactions")
         elements = driver.find_elements_by_class_name("ow-link")
         elements[1].click()
         elements = driver.find_element_by_id("transaction_result")
         elements.click()
-        return driver.page_source
 
+        transaction_source = driver.page_source
 
+        # get remaining residence plan balance
+        driver.get("https://watcard.uwaterloo.ca/OneWeb/Financial/Balances")
+        balance_source = driver.page_source
+        return [transaction_source, balance_source]
 
 
